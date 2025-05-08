@@ -1,0 +1,728 @@
+CREATE TABLE IF NOT EXISTS STARTUP (
+    STARTUP_ID INTEGER PRIMARY KEY,
+    NAME TEXT,
+    INDUSTRY TEXT,
+    LOCATION TEXT,
+    FOUNDING_DATE DATE
+);
+
+CREATE TABLE IF NOT EXISTS FOUNDERS (
+    FOUNDER_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    NAME TEXT,
+    ROLE TEXT,
+    EMAIL TEXT,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS FUNDING (
+    FUNDING_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    FUNDING_ROUND TEXT,
+    INVESTOR_NAME TEXT,
+    AMOUNT REAL,
+    DATE DATE,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS GROWTH (
+    GROWTH_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    REVENUE REAL,
+    EMPLOYEES INTEGER,
+    CUSTOMERS INTEGER,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS NEWS (
+    NEWS_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    HEADLINE TEXT,
+    PUBLICATION_DATE DATE,
+    SOURCE TEXT,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS AWARDS (
+    AWARD_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    AWARD_NAME TEXT,
+    AWARDING_ORGANIZATION TEXT,
+    DATE DATE,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS PARTNERS (
+    PARTNER_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    PARTNER_NAME TEXT,
+    PARTNERSHIP_DATE DATE,
+    TYPE TEXT,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS CUSTOMERS (
+    CUSTOMER_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    CUSTOMER_NAME TEXT,
+    CUSTOMER_TYPE TEXT,
+    FEEDBACK TEXT,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS COMPETITORS (
+    COMPETITOR_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    COMPETITOR_NAME TEXT,
+    COMPETITOR_LOCATION TEXT,
+    COMPETITOR_INDUSTRY TEXT,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+CREATE TABLE IF NOT EXISTS EMPLOYEES (
+    EMPLOYEE_ID INTEGER PRIMARY KEY,
+    STARTUP_ID INTEGER,
+    EMPLOYEE_NAME TEXT,
+    EMPLOYEE_ROLE TEXT,
+    EMPLOYEE_EXPERIENCE INTEGER,
+    FOREIGN KEY (STARTUP_ID) REFERENCES STARTUP(STARTUP_ID)
+);
+
+#################################################Insert Queries##############################################################
+
+-- Insert data into STARTUP table
+INSERT INTO STARTUP (NAME, INDUSTRY, LOCATION, FOUNDING_DATE) VALUES
+    ('Startup1', 'Tech', 'Bangalore', '2020-01-01'),
+    ('Startup2', 'Healthcare', 'Mumbai', '2019-05-15'),
+    ('Startup3', 'E-commerce', 'Delhi', '2018-11-30'),
+    ('Startup4', 'Finance', 'Chennai', '2017-08-20'),
+    ('Startup5', 'Food & Beverage', 'Kolkata', '2016-03-10'),
+    ('Startup6', 'Education', 'Hyderabad', '2015-09-28'),
+    ('Startup7', 'Tech', 'Bangalore', '2014-04-05'),
+    ('Startup8', 'Healthcare', 'Mumbai', '2013-10-15'),
+    ('Startup9', 'E-commerce', 'Delhi', '2012-07-20'),
+    ('Startup10', 'Finance', 'Chennai', '2011-12-31'),
+    ('Startup11', 'Food & Beverage', 'Kolkata', '2010-06-25'),
+    ('Startup12', 'Education', 'Hyderabad', '2009-01-12'),
+    ('Startup13', 'Tech', 'Bangalore', '2008-08-03'),
+    ('Startup14', 'Healthcare', 'Mumbai', '2007-05-18'),
+    ('Startup15', 'E-commerce', 'Delhi', '2006-02-22'),
+    ('Startup16', 'Finance', 'Chennai', '2005-11-09'),
+    ('Startup17', 'Food & Beverage', 'Kolkata', '2004-09-14'),
+    ('Startup18', 'Education', 'Hyderabad', '2003-07-07'),
+    ('Startup19', 'Tech', 'Bangalore', '2002-04-30'),
+    ('Startup20', 'Healthcare', 'Mumbai', '2001-02-25');
+
+-- Insert data into FOUNDERS table
+INSERT INTO FOUNDERS (STARTUP_ID, NAME, ROLE, EMAIL) VALUES
+    (1, 'John Doe', 'CEO', 'john@example.com'),
+    (1, 'Jane Smith', 'CTO', 'jane@example.com'),
+    (2, 'Alice Johnson', 'Co-founder', 'alice@example.com'),
+    (3, 'Bob Williams', 'Founder', 'bob@example.com'),
+    (4, 'Michael Brown', 'CEO', 'michael@example.com'),
+    (5, 'Emily Davis', 'CTO', 'emily@example.com'),
+    (6, 'David Wilson', 'Co-founder', 'david@example.com'),
+    (7, 'Sarah Johnson', 'Founder', 'sarah@example.com'),
+    (8, 'Daniel Taylor', 'CEO', 'daniel@example.com'),
+    (9, 'Olivia Martinez', 'CTO', 'olivia@example.com'),
+    (10, 'William Jones', 'Co-founder', 'william@example.com'),
+    (11, 'Sophia Lee', 'Founder', 'sophia@example.com'),
+    (12, 'James Anderson', 'CEO', 'james@example.com'),
+    (13, 'Emma Thompson', 'CTO', 'emma@example.com'),
+    (14, 'Lucas Garcia', 'Co-founder', 'lucas@example.com'),
+    (15, 'Ava Rodriguez', 'Founder', 'ava@example.com'),
+    (16, 'Ethan Hernandez', 'CEO', 'ethan@example.com'),
+    (17, 'Chloe Lopez', 'CTO', 'chloe@example.com'),
+    (18, 'Logan Martinez', 'Co-founder', 'logan@example.com'),
+    (19, 'Mia Perez', 'Founder', 'mia@example.com'),
+    (20, 'Noah Taylor', 'CEO', 'noah@example.com');
+
+-- Insert data into FUNDING table
+INSERT INTO FUNDING (STARTUP_ID, FUNDING_ROUND, INVESTOR_NAME, AMOUNT, DATE) VALUES
+    (1, 'Seed', 'Venture Capital Firm A', 500000, '2020-03-15'),
+    (1, 'Series A', 'Angel Investor B', 2000000, '2021-07-20'),
+    (2, 'Pre-seed', 'Venture Capital Firm C', 300000, '2019-11-10'),
+    (3, 'Series B', 'Angel Investor D', 5000000, '2020-06-05'),
+    (4, 'Seed', 'Venture Capital Firm E', 700000, '2018-12-30'),
+    (4, 'Series A', 'Angel Investor F', 2500000, '2019-10-25'),
+    (5, 'Seed', 'Venture Capital Firm G', 600000, '2017-05-20'),
+    (5, 'Pre-seed', 'Angel Investor H', 400000, '2018-02-15'),
+    (6, 'Seed', 'Venture Capital Firm I', 800000, '2016-08-10'),
+    (6, 'Series A', 'Angel Investor J', 3500000, '2017-07-05'),
+    (7, 'Seed', 'Venture Capital Firm K', 900000, '2015-04-30'),
+    (7, 'Pre-seed', 'Angel Investor L', 200000, '2016-01-25'),
+    (8, 'Seed', 'Venture Capital Firm M', 400000, '2014-09-20'),
+    (8, 'Series A', 'Angel Investor N', 3000000, '2015-08-15'),
+    (9, 'Seed', 'Venture Capital Firm O', 600000, '2013-06-10'),
+    (9, 'Pre-seed', 'Angel Investor P', 500000, '2014-03-05'),
+    (10, 'Seed', 'Venture Capital Firm Q', 1000000, '2012-12-31'),
+    (10, 'Series A', 'Angel Investor R', 4000000, '2013-11-25'),
+    (11, 'Seed', 'Venture Capital Firm S', 1200000, '2011-08-20'),
+    (11, 'Pre-seed', 'Angel Investor T', 800000, '2012-05-15'),
+    (12, 'Seed', 'Venture Capital Firm U', 1500000, '2010-04-10'),
+    (12, 'Series A', 'Angel Investor V', 3500000, '2011-03-05'),
+    (13, 'Seed', 'Venture Capital Firm W', 2000000, '2009-12-30'),
+    (13, 'Pre-seed', 'Angel Investor X', 500000, '2010-09-25'),
+    (14, 'Series A', 'Angel Investor Y', 3000000, '2011-07-20'),
+    (15, 'Seed', 'Venture Capital Firm Z', 1800000, '2010-04-15'),
+    (15, 'Pre-seed', 'Angel Investor AA', 600000, '2011-01-10'),
+    (16, 'Seed', 'Venture Capital Firm AB', 2200000, '2009-10-05'),
+    (16, 'Series A', 'Angel Investor AC', 4000000, '2010-08-30'),
+    (17, 'Seed', 'Venture Capital Firm AD', 2600000, '2008-06-25'),
+    (17, 'Pre-seed', 'Angel Investor AE', 700000, '2009-03-20'),
+    (18, 'Seed', 'Venture Capital Firm AF', 3000000, '2007-12-15'),
+    (18, 'Series A', 'Angel Investor AG', 5000000, '2008-09-10'),
+    (19, 'Seed', 'Venture Capital Firm AH', 3500000, '2006-08-05'),
+    (19, 'Pre-seed', 'Angel Investor AI', 800000, '2007-05-01'),
+    (20, 'Seed', 'Venture Capital Firm AJ', 4000000, '2005-02-25'),
+    (20, 'Series A', 'Angel Investor AK', 6000000, '2006-01-20');
+
+-- Insert data into GROWTH table
+INSERT INTO GROWTH (STARTUP_ID, REVENUE, EMPLOYEES, CUSTOMERS) VALUES
+    (1, 100000, 20, 500),
+    (2, 50000, 15, 300),
+    (3, 200000, 30, 700),
+    (4, 150000, 25, 600),
+    (5, 200000, 30, 700),
+    (6, 100000, 20, 500),
+    (7, 50000, 15, 300),
+    (8, 200000, 30, 700),
+    (9, 150000, 25, 600),
+    (10, 200000, 30, 700),
+    (11, 100000, 20, 500),
+    (12, 50000, 15, 300),
+    (13, 200000, 30, 700),
+    (14, 150000, 25, 600),
+    (15, 200000, 30, 700),
+    (16, 100000, 20, 500),
+    (17, 50000, 15, 300),
+    (18, 200000, 30, 700),
+    (19, 150000, 25, 600),
+    (20, 200000, 30, 700);
+
+-- Insert data into NEWS table
+INSERT INTO NEWS (STARTUP_ID, HEADLINE, PUBLICATION_DATE, SOURCE) VALUES
+    (1, 'Startup1 launches new product', '2021-04-25', 'TechCrunch'),
+    (1, 'Startup1 raises $2M in Series A funding', '2021-07-21', 'Forbes'),
+    (2, 'Startup2 expands operations to new cities', '2020-12-10', 'Business Insider'),
+    (3, 'Startup3 introduces innovative payment system', '2022-03-01', 'The Economic Times'),
+    (4, 'Startup4 launches finance management app', '2019-10-05', 'Financial Times'),
+    (5, 'Startup5 revolutionizes food delivery industry', '2018-06-20', 'FoodTech Magazine'),
+    (6, 'Startup6 disrupts education with online learning platform', '2017-03-15', 'EdTech Weekly'),
+    (7, 'Startup7 develops cutting-edge tech solution for businesses', '2016-09-30', 'Tech Today'),
+    (8, 'Startup8 introduces innovative healthcare app', '2015-05-25', 'Health Innovations Journal'),
+    (9, 'Startup9 launches e-commerce platform for local artisans', '2014-02-20', 'Retail Gazette'),
+    (10, 'Startup10 expands financial services to rural areas', '2013-01-15', 'Finance Monthly'),
+    (11, 'Startup11 disrupts traditional food production methods', '2012-07-10', 'FoodRevolution'),
+    (12, 'Startup12 introduces personalized learning for students', '2011-04-05', 'Education Today'),
+    (13, 'Startup13 revolutionizes tech with new AI technology', '2010-12-01', 'Tech Insights'),
+    (14, 'Startup14 creates breakthrough healthcare device', '2009-08-15', 'HealthTech Innovations'),
+    (15, 'Startup15 becomes leading e-commerce platform', '2008-04-10', 'eCommerce Gazette'),
+    (16, 'Startup16 disrupts traditional banking with digital solutions', '2007-01-05', 'Banking Today'),
+    (17, 'Startup17 pioneers sustainable food packaging solutions', '2006-09-20', 'Sustainable Food Journal'),
+    (18, 'Startup18 transforms education with interactive learning tools', '2005-05-15', 'EdTech Trends'),
+    (19, 'Startup19 develops cutting-edge tech for renewable energy', '2004-02-10', 'Renewable Energy Review'),
+    (20, 'Startup20 revolutionizes healthcare with telemedicine platform', '2003-10-05', 'HealthTech Today');
+
+-- Insert data into AWARDS table
+INSERT INTO AWARDS (STARTUP_ID, AWARD_NAME, AWARDING_ORGANIZATION, DATE) VALUES
+    (1, 'Best Tech Startup', 'Tech Awards 2021', '2021-09-15'),
+    (2, 'Innovative Startup of the Year', 'Healthcare Innovation Awards', '2020-11-30'),
+    (3, 'Education Excellence Award', 'National Education Summit', '2019-12-05'),
+    (4, 'Finance Startup of the Year', 'Finance Awards 2018', '2018-08-15'),
+    (5, 'Food & Beverage Innovation Award', 'Food Expo', '2017-10-20'),
+    (6, 'Educational Technology Award', 'EdTech Summit', '2016-05-25'),
+    (7, 'Tech Startup Achievement Award', 'Tech Innovations Conference', '2015-07-30'),
+    (8, 'Healthcare Startup Excellence Award', 'Healthcare Symposium', '2014-09-10'),
+    (9, 'E-commerce Startup of the Year', 'E-commerce Awards', '2013-11-15'),
+    (10, 'Finance Innovation Award', 'Finance Forum', '2012-12-20'),
+    (11, 'Food & Beverage Startup Achievement Award', 'Food Expo', '2011-10-25'),
+    (12, 'Education Startup Excellence Award', 'Education Summit', '2010-08-30'),
+    (13, 'Tech Startup Innovation Award', 'Tech Expo', '2009-07-05'),
+    (14, 'Healthcare Technology Award', 'Healthcare Tech Summit', '2008-09-15'),
+    (15, 'E-commerce Startup Innovation Award', 'E-commerce Expo', '2007-11-20'),
+    (16, 'Finance Startup Achievement Award', 'Finance Awards', '2006-12-25'),
+    (17, 'Food & Beverage Startup Excellence Award', 'Food Expo', '2005-10-30'),
+    (18, 'Education Innovation Award', 'Education Tech Conference', '2004-08-05'),
+    (19, 'Tech Startup Achievement Award', 'Tech Innovations Summit', '2003-06-10'),
+    (20, 'Healthcare Startup of the Year', 'Healthcare Awards', '2002-04-15');
+
+-- Insert data into PARTNERS table
+INSERT INTO PARTNERS (STARTUP_ID, PARTNER_NAME, PARTNERSHIP_DATE, TYPE) VALUES
+    (1, 'Company X', '2020-05-01', 'Strategic Partnership'),
+    (2, 'Organization Y', '2019-10-15', 'Marketing Collaboration'),
+    (3, 'Enterprise Z', '2018-08-20', 'Technology Integration'),
+    (4, 'Company A', '2017-06-01', 'Joint Product Development'),
+    (5, 'Organization B', '2016-04-15', 'Research Collaboration'),
+    (6, 'Enterprise C', '2015-02-10', 'Strategic Alliance'),
+    (7, 'Company D', '2014-01-05', 'Marketing Partnership'),
+    (8, 'Organization E', '2013-03-20', 'Joint Venture'),
+    (9, 'Enterprise F', '2012-09-12', 'Research and Development'),
+    (10, 'Company G', '2011-07-30', 'Strategic Investment'),
+    (11, 'Organization H', '2010-05-25', 'Technology Partnership'),
+    (12, 'Enterprise I', '2009-03-15', 'Marketing Alliance'),
+    (13, 'Company J', '2008-02-01', 'Product Collaboration'),
+    (14, 'Organization K', '2007-08-20', 'Joint Development'),
+    (15, 'Enterprise L', '2006-06-10', 'Strategic Collaboration'),
+    (16, 'Company M', '2005-04-05', 'Technology Collaboration'),
+    (17, 'Organization N', '2004-01-30', 'Marketing Integration'),
+    (18, 'Enterprise O', '2003-07-15', 'Joint Marketing'),
+    (19, 'Company P', '2002-05-20', 'Research Partnership'),
+    (20, 'Organization Q', '2001-03-10', 'Strategic Investment');
+
+-- Insert data into CUSTOMERS table
+INSERT INTO CUSTOMERS (STARTUP_ID, CUSTOMER_NAME, CUSTOMER_TYPE, FEEDBACK) VALUES
+    (1, 'ABC Corporation', 'Enterprise', 'Great service!'),
+    (1, 'XYZ Enterprises', 'Small Business', 'Easy to use product'),
+    (2, 'Healthcare Clinic A', 'Healthcare Provider', 'Satisfied with the platform'),
+    (2, 'Pharmacy XYZ', 'Retail', 'User-friendly platform'),
+    (3, 'University ABC', 'Education Institution', 'Great customer support'),
+    (3, 'Tech Company DEF', 'Enterprise', 'Efficient service delivery'),
+    (4, 'Retailer PQR', 'Retail', 'Excellent product quality'),
+    (4, 'Manufacturer LMN', 'Manufacturer', 'Highly reliable service'),
+    (5, 'Food Chain RST', 'Food Service', 'Timely delivery and fresh products'),
+    (5, 'Wholesale Distributors UVW', 'Wholesale', 'Cost-effective solutions'),
+    (6, 'Online Learning XYZ', 'Education Technology', 'Interactive learning experience'),
+    (6, 'Training Institute JKL', 'Training', 'Professional instructors and comprehensive courses'),
+    (7, 'Software Company MNO', 'Software', 'Seamless integration with existing systems'),
+    (7, 'Technology Firm STU', 'Technology', 'Cutting-edge solutions and great support'),
+    (8, 'Healthcare Provider VWX', 'Healthcare', 'Improved patient care and efficiency'),
+    (8, 'Pharmaceutical Company YZA', 'Pharmaceutical', 'High-quality medications and reliable supply chain'),
+    (9, 'E-commerce Website BCD', 'E-commerce', 'User-friendly interface and prompt delivery'),
+    (9, 'Online Marketplace EFG', 'Marketplace', 'Wide range of products and secure transactions'),
+    (10, 'Financial Institution HIJ', 'Finance', 'Expert financial advice and personalized service'),
+    (10, 'Investment Firm KLM', 'Investment', 'Excellent returns and diversified portfolio'),
+    (11, 'Restaurant Chain NOP', 'Restaurant', 'Delicious food and excellent customer service'),
+    (11, 'Catering Services QRS', 'Catering', 'Customized menus and professional staff');
+-- Insert data into COMPETITORS table
+INSERT INTO COMPETITORS (STARTUP_ID, COMPETITOR_NAME, COMPETITOR_LOCATION, COMPETITOR_INDUSTRY) VALUES
+    (1, 'Competitor1', 'Bangalore', 'Tech'),
+    (1, 'Competitor7', 'Delhi', 'Tech'),
+    (2, 'Competitor2', 'Mumbai', 'Healthcare'),
+    (2, 'Competitor5', 'Bangalore', 'Healthcare'),
+    (3, 'Competitor3', 'Delhi', 'Education'),
+    (3, 'Competitor6', 'Mumbai', 'Education'),
+    (4, 'Competitor8', 'Hyderabad', 'Finance'),
+    (5, 'Competitor11', 'Kolkata', 'Food & Beverage'),
+    (5, 'Competitor17', 'Chennai', 'Food & Beverage'),
+    (6, 'Competitor12', 'Hyderabad', 'Education'),
+    (6, 'Competitor18', 'Bangalore', 'Education'),
+    (7, 'Competitor13', 'Bangalore', 'Tech'),
+    (7, 'Competitor19', 'Mumbai', 'Tech'),
+    (8, 'Competitor14', 'Mumbai', 'Healthcare'),
+    (8, 'Competitor20', 'Delhi', 'Healthcare'),
+    (9, 'Competitor15', 'Delhi', 'E-commerce'),
+    (9, 'Competitor21', 'Chennai', 'E-commerce'),
+    (10, 'Competitor16', 'Chennai', 'Finance'),
+    (10, 'Competitor22', 'Kolkata', 'Finance'),
+    (11, 'Competitor23', 'Kolkata', 'Food & Beverage'),
+    (11, 'Competitor29', 'Hyderabad', 'Food & Beverage'),
+    (12, 'Competitor24', 'Hyderabad', 'Education'),
+    (12, 'Competitor30', 'Bangalore', 'Education'),
+    (13, 'Competitor25', 'Bangalore', 'Tech'),
+    (13, 'Competitor31', 'Mumbai', 'Tech'),
+    (14, 'Competitor26', 'Mumbai', 'Healthcare'),
+    (14, 'Competitor32', 'Delhi', 'Healthcare');
+
+-- Insert data into EMPLOYEES table
+INSERT INTO EMPLOYEES (STARTUP_ID, EMPLOYEE_NAME, EMPLOYEE_ROLE, EMPLOYEE_EXPERIENCE) VALUES
+    (1, 'Alex Johnson', 'Software Engineer', 3),
+    (1, 'Emma Brown', 'UI/UX Designer', 2),
+    (2, 'Michael Davis', 'Data Analyst', 4),
+    (2, 'Olivia Wilson', 'HR Manager', 3),
+    (3, 'Sophia Lee', 'Lead Developer', 5),
+    (3, 'William Taylor', 'Marketing Manager', 4),
+    (4, 'Ethan Clark', 'Financial Analyst', 6),
+    (4, 'Ava Hernandez', 'Accountant', 4),
+    (5, 'Noah Martinez', 'Chef', 8),
+    (5, 'Isabella Garcia', 'Food Safety Inspector', 6),
+    (6, 'James Brown', 'Educational Content Writer', 5),
+    (6, 'Ava Moore', 'Instructional Designer', 4),
+    (7, 'Lucas Robinson', 'Software Developer', 7),
+    (7, 'Ella Perez', 'Network Engineer', 6),
+    (8, 'Logan Turner', 'Medical Assistant', 5),
+    (8, 'Mia Phillips', 'Pharmacist', 7),
+    (9, 'Jack Hall', 'Web Developer', 6),
+    (9, 'Nora King', 'Customer Support Representative', 3),
+    (10, 'Liam Carter', 'Financial Advisor', 8),
+    (10, 'Sophia White', 'Investment Analyst', 6);
+
+#####################Operations#############
+
+SQL query that joins multiple tables (STARTUP, FUNDING, GROWTH, AWARDS, PARTNERS, CUSTOMERS, COMPETITORS, EMPLOYEES) and performs sorting and searching:
+SELECT 
+    S.NAME AS Startup_Name, 
+    S.INDUSTRY AS Industry,
+    S.LOCATION AS Location,
+    F.FUNDING_ROUND AS Funding_Round,
+    F.AMOUNT AS Funding_Amount,
+    G.REVENUE AS Revenue,
+    G.EMPLOYEES AS Employees_Count,
+    A.AWARD_NAME AS Award_Name,
+    P.PARTNER_NAME AS Partner_Name,
+    C.CUSTOMER_NAME AS Customer_Name,
+    CMP.COMPETITOR_NAME AS Competitor_Name,
+    E.EMPLOYEE_NAME AS Employee_Name
+FROM 
+    STARTUP S
+LEFT JOIN 
+    FUNDING F ON S.STARTUP_ID = F.STARTUP_ID
+LEFT JOIN 
+    GROWTH G ON S.STARTUP_ID = G.STARTUP_ID
+LEFT JOIN 
+    AWARDS A ON S.STARTUP_ID = A.STARTUP_ID
+LEFT JOIN 
+    PARTNERS P ON S.STARTUP_ID = P.STARTUP_ID
+LEFT JOIN 
+    CUSTOMERS C ON S.STARTUP_ID = C.STARTUP_ID
+LEFT JOIN 
+    COMPETITORS CMP ON S.STARTUP_ID = CMP.STARTUP_ID
+LEFT JOIN 
+    EMPLOYEES E ON S.STARTUP_ID = E.STARTUP_ID
+ORDER BY 
+    S.NAME;
+
+
+Sure, here are some additional SQL queries that perform operations using joins on the tables you provided:
+
+Retrieve startup details along with their founders' roles:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, f.NAME AS Founder_Name, f.ROLE
+FROM STARTUP s
+INNER JOIN FOUNDERS f ON s.STARTUP_ID = f.STARTUP_ID;
+List startups along with their funding details including the investor names:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, f.FUNDING_ROUND, f.AMOUNT, f.INVESTOR_NAME
+FROM STARTUP s
+INNER JOIN FUNDING f ON s.STARTUP_ID = f.STARTUP_ID;
+Display startup names with their associated awards and the awarding organizations:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, a.AWARD_NAME, a.AWARDING_ORGANIZATION
+FROM STARTUP s
+LEFT JOIN AWARDS a ON s.STARTUP_ID = a.STARTUP_ID;
+Find startups along with their growth metrics such as revenue, employees, and customers:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, g.REVENUE, g.EMPLOYEES, g.CUSTOMERS
+FROM STARTUP s
+INNER JOIN GROWTH g ON s.STARTUP_ID = g.STARTUP_ID;
+Retrieve startup names with their latest news headlines and publication dates:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, n.HEADLINE, n.PUBLICATION_DATE
+FROM STARTUP s
+LEFT JOIN NEWS n ON s.STARTUP_ID = n.STARTUP_ID
+ORDER BY n.PUBLICATION_DATE DESC;
+List startup partners and their partnership details along with the startup names:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, p.PARTNER_NAME, p.PARTNERSHIP_DATE, p.TYPE
+FROM STARTUP s
+INNER JOIN PARTNERS p ON s.STARTUP_ID = p.STARTUP_ID;
+Display startup employees and their roles along with the startup names:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, e.EMPLOYEE_NAME, e.EMPLOYEE_ROLE, e.EMPLOYEE_EXPERIENCE
+FROM STARTUP s
+INNER JOIN EMPLOYEES e ON s.STARTUP_ID = e.STARTUP_ID;
+Find competitors of each startup along with their locations and industries:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, c.COMPETITOR_NAME, c.COMPETITOR_LOCATION, c.COMPETITOR_INDUSTRY
+FROM STARTUP s
+LEFT JOIN COMPETITORS c ON s.STARTUP_ID = c.STARTUP_ID;
+Retrieve customers of each startup along with their types and feedback:
+sql
+Copy code
+SELECT s.NAME AS Startup_Name, c.CUSTOMER_NAME, c.CUSTOMER_TYPE, c.FEEDBACK
+FROM STARTUP s
+LEFT JOIN CUSTOMERS c ON s.STARTUP_ID = c.STARTUP_ID;
+
+
+
+####################Database Connectivity################
+
+import tkinter as tk
+from tkinter import ttk, messagebox, simpledialog
+import sqlite3
+
+class DatabaseGUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Database Management")
+
+        # Labels and entries for database connection
+        self.label_db_name = tk.Label(root, text="Database Name:")
+        self.label_db_name.grid(row=0, column=0, padx=10, pady=5, sticky="e")
+        
+        self.entry_db_name = tk.Entry(root)
+        self.entry_db_name.grid(row=0, column=1, padx=10, pady=5)
+        self.entry_db_name.insert(tk.END, "yashdb")  # Default value for database name
+        
+        self.label_username = tk.Label(root, text="Username:")
+        self.label_username.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        
+        self.entry_username = tk.Entry(root)
+        self.entry_username.grid(row=1, column=1, padx=10, pady=5)
+        
+        self.label_password = tk.Label(root, text="Password:")
+        self.label_password.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        
+        self.entry_password = tk.Entry(root, show="*")
+        self.entry_password.grid(row=2, column=1, padx=10, pady=5)
+        
+        self.connect_button = tk.Button(root, text="Connect", command=self.login)
+        self.connect_button.grid(row=3, columnspan=2, padx=10, pady=10)
+
+        # Dropdown menu for table selection
+        self.table_selection_label = tk.Label(root, text="Select Table:")
+        self.table_selection_label.grid(row=4, column=0, padx=10, pady=5, sticky="e")
+
+        self.tables = ["STARTUP", "FOUNDERS", "FUNDING", "GROWTH", "NEWS", "AWARDS", "PARTNERS", "CUSTOMERS", "COMPETITORS", "EMPLOYEES"]
+        self.selected_table = tk.StringVar(root)
+        self.selected_table.set(self.tables[0])  # Default table selection
+
+        self.table_dropdown = tk.OptionMenu(root, self.selected_table, *self.tables)
+        self.table_dropdown.grid(row=4, column=1, padx=10, pady=5)
+
+        # Buttons for database operations (initially hidden)
+        self.insert_button = tk.Button(root, text="Insert Data", command=self.insert_data, state=tk.DISABLED)
+        self.insert_button.grid(row=5, column=0, padx=10, pady=10)
+        
+        self.display_button = tk.Button(root, text="Display Data", command=self.display_data, state=tk.DISABLED)
+        self.display_button.grid(row=5, column=1, padx=10, pady=10)
+        
+        self.update_button = tk.Button(root, text="Update Data", command=self.update_data, state=tk.DISABLED)
+        self.update_button.grid(row=6, column=0, columnspan=2, padx=10, pady=10)
+
+        self.delete_button = tk.Button(root, text="Delete Data", command=self.delete_data, state=tk.DISABLED)
+        self.delete_button.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
+
+        # Treeview to display table data
+        self.treeview = ttk.Treeview(root)
+        self.treeview.grid(row=8, column=0, columnspan=2, padx=10, pady=10)
+        
+        # Scrollbars for Treeview
+        self.scrollbar_vertical = ttk.Scrollbar(root, orient="vertical", command=self.treeview.yview)
+        self.scrollbar_vertical.grid(row=8, column=2, sticky="ns")
+        self.treeview.configure(yscrollcommand=self.scrollbar_vertical.set)
+
+        self.scrollbar_horizontal = ttk.Scrollbar(root, orient="horizontal", command=self.treeview.xview)
+        self.scrollbar_horizontal.grid(row=9, column=0, columnspan=2, sticky="ew")
+        self.treeview.configure(xscrollcommand=self.scrollbar_horizontal.set)
+
+        # Button to display all table details
+        self.display_all_button = tk.Button(root, text="Display All Tables", command=self.display_all_table_details, state=tk.DISABLED)
+        self.display_all_button.grid(row=10, columnspan=2, padx=10, pady=10)
+
+        # Entry widget and button for custom queries
+        self.query_entry = tk.Entry(root)
+        self.query_entry.grid(row=11, column=0, padx=10, pady=5, columnspan=2, sticky="ew")
+
+        self.execute_query_button = tk.Button(root, text="Execute Query", command=self.execute_custom_query, state=tk.DISABLED)
+        self.execute_query_button.grid(row=12, column=0, padx=10, pady=5, columnspan=2)
+
+    def connect_to_database(self):
+        try:
+            db_name = self.entry_db_name.get()
+            username = self.entry_username.get()
+            password = self.entry_password.get()
+            
+            if username == "yash" and password == "Yash@2003":
+                connection = sqlite3.connect(db_name)
+                return connection
+            else:
+                messagebox.showerror("Error", "Invalid username or password!")
+                return None
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to connect to the database: {str(e)}")
+            return None
+
+    def login(self):
+        connection = self.connect_to_database()
+        if connection:
+            self.connect_button.config(state=tk.DISABLED)
+            self.insert_button.config(state=tk.NORMAL)
+            self.display_button.config(state=tk.NORMAL)
+            self.update_button.config(state=tk.NORMAL)
+            self.delete_button.config(state=tk.NORMAL)
+            self.display_all_button.config(state=tk.NORMAL)
+            self.execute_query_button.config(state=tk.NORMAL)
+            messagebox.showinfo("Success", "Login successful!")
+
+    def insert_data(self):
+        table_name = self.selected_table.get()
+        column_names = self.get_column_names(table_name)
+        data = self.get_insertion_data(column_names)
+        if data:
+            self.execute_insert_query(table_name, column_names, data)
+            messagebox.showinfo("Success", "Data inserted successfully!")
+
+    def get_column_names(self, table_name):
+        connection = self.connect_to_database()
+        if connection:
+            cursor = connection.cursor()
+            cursor.execute(f"PRAGMA table_info({table_name})")
+            columns = cursor.fetchall()
+            return [col[1] for col in columns]
+        return []
+
+    def get_insertion_data(self, column_names):
+        data = []
+        for col in column_names:
+            value = simpledialog.askstring("Insert Data", f"Enter value for {col}:")
+            if value is None:
+                return None
+            data.append(value)
+        return data
+
+    def execute_insert_query(self, table_name, column_names, data):
+     try:
+        connection = self.connect_to_database()
+        if connection:
+            cursor = connection.cursor()
+            columns = ', '.join(column_names)
+            placeholders = ', '.join(['?' for _ in range(len(column_names))])
+            query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+            cursor.execute(query, data)
+            connection.commit()
+            connection.close()
+            self.display_data()  # Update the displayed data after insertion
+            messagebox.showinfo("Success", "Data inserted successfully!")
+     except Exception as e:
+        messagebox.showerror("Error", f"Failed to insert data: {str(e)}")
+
+    def delete_data(self):
+        table_name = self.selected_table.get()
+        column_names = self.get_column_names(table_name)
+        conditions = self.get_deletion_conditions(column_names)
+        if conditions:
+            self.execute_delete_query(table_name, conditions)
+            messagebox.showinfo("Success", "Data deleted successfully!")
+
+    def get_deletion_conditions(self, column_names):
+        conditions = []
+        for col in column_names:
+            value = simpledialog.askstring("Delete Data", f"Enter value for {col} to delete:")
+            if value is None:
+                return None
+            conditions.append((col, value))
+        return conditions
+
+    def execute_delete_query(self, table_name, conditions):
+        try:
+            connection = self.connect_to_database()
+            if connection:
+                cursor = connection.cursor()
+                where_clause = ' AND '.join([f"{col} = ?" for col, _ in conditions])
+                values = [val for _, val in conditions]
+                query = f"DELETE FROM {table_name} WHERE {where_clause}"
+                cursor.execute(query, values)
+                connection.commit()
+                connection.close()
+                self.display_data()  # Update the displayed data after deletion
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to delete data: {str(e)}")
+
+    def display_data(self):
+        connection = self.connect_to_database()
+        if connection:
+            table_name = self.selected_table.get()
+            cursor = connection.cursor()
+            cursor.execute(f"SELECT * FROM {table_name}")
+            data = cursor.fetchall()
+            connection.close()
+            self.display_data_in_treeview(data)
+
+    def display_data_in_treeview(self, data):
+        # Clear existing treeview
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
+        
+        # Insert new data into treeview
+        if data:
+            # Get column names from cursor description
+            cursor = self.connect_to_database().cursor()
+            cursor.execute(f"SELECT * FROM {self.selected_table.get()}")
+            columns = [desc[0] for desc in cursor.description]
+            
+            # Configure Treeview columns
+            self.treeview["columns"] = columns
+            self.treeview.heading("#0", text="Index")
+            for col in columns:
+                self.treeview.heading(col, text=col)
+            
+            # Insert data into Treeview
+            index = 1
+            for row in data:
+                self.treeview.insert("", "end", text=index, values=row)
+                index += 1
+
+    def display_all_table_details(self):
+        connection = self.connect_to_database()
+        if connection:
+            for table in self.tables:
+                cursor = connection.cursor()
+                cursor.execute(f"SELECT * FROM {table}")
+                data = cursor.fetchall()
+                messagebox.showinfo(f"{table} Details", f"{table}:\n{data}")
+
+    def execute_custom_query(self):
+        query = self.query_entry.get()
+        if query:
+            connection = self.connect_to_database()
+            if connection:
+                try:
+                    cursor = connection.cursor()
+                    cursor.execute(query)
+                    data = cursor.fetchall()
+                    connection.close()
+                    if data:
+                        messagebox.showinfo("Query Result", f"Query executed successfully:\n{data}")
+                    else:
+                        messagebox.showinfo("Query Result", "Query executed successfully.")
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to execute query: {str(e)}")
+        else:
+            messagebox.showwarning("Warning", "Please enter a query to execute.")
+
+    def update_data(self):
+        table_name = self.selected_table.get()
+        column_names = self.get_column_names(table_name)
+        conditions = self.get_update_conditions(column_names)
+        if conditions:
+            self.execute_update_query(table_name, conditions)
+            messagebox.showinfo("Success", "Data updated successfully!")
+
+    def get_update_conditions(self, column_names):
+        conditions = {}
+        for col in column_names:
+            value = simpledialog.askstring("Update Data", f"Enter new value for {col}:")
+            if value is None:
+                return None
+            conditions[col] = value
+        return conditions
+
+    def execute_update_query(self, table_name, conditions):
+        try:
+            connection = self.connect_to_database()
+            if connection:
+                cursor = connection.cursor()
+                set_clause = ', '.join([f"{col} = ?" for col in conditions.keys()])
+                values = list(conditions.values())
+                query = f"UPDATE {table_name} SET {set_clause}"
+                cursor.execute(query, values)
+                connection.commit()
+                connection.close()
+                self.display_data()  # Update the displayed data after updating
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to update data: {str(e)}")
+
+root = tk.Tk()
+app = DatabaseGUI(root)
+root.mainloop()
+                                         
+                                         
